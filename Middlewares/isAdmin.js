@@ -1,4 +1,4 @@
-export default isAdmin = async (req, res, next) => {
+export const isAdmin = async (req, res, next) => {
     if (req.user.role === 'ADMIN') {
         return next();
     }
