@@ -7,7 +7,7 @@ import { isAdmin } from '../Middlewares/isAdmin.js';
 
 const router = express.Router();
 
-router.route('/').post(isLogin, multer({ storage: sliderStorage }).array('photos', 4), insert);
+router.route('/').post(isLogin, isAdmin, multer({ storage: sliderStorage }).array('photos', 4), insert);
 router.route('/lasted').get(getLasted);
 router.route('/offs').get(getOffs);
 router.route('/bestseller').get(getBestSell);
