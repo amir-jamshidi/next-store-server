@@ -22,7 +22,6 @@ export const register = async (req, res, next) => {
 
 
 }
-
 export const login = async (req, res, next) => {
     try {
         const { phone } = req.body;
@@ -43,10 +42,8 @@ export const login = async (req, res, next) => {
 
 
 }
-
 export const getMe = (req, res, next) => {
 }
-
 export const validation = async (req, res, next) => {
     try {
         const { phone, code } = req.body;

@@ -1,5 +1,5 @@
 import productModel from '../Models/Product.js'
-import sellerModel from '../Models/Seller.js'
+
 
 export const insert = async (req, res, next) => {
     try {
@@ -93,4 +93,8 @@ export const getBestLasted = async (req, res, next) => {
     } catch (error) {
         next(error)
     }
+}
+
+export const getProduct = async (req, res, next) => {
+
 }
