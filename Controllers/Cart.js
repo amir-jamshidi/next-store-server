@@ -10,3 +10,6 @@ export const remove = async (req, res, next) => {
 
 }
 
+export const getAll = async (req, res, next) => {
+
+}
