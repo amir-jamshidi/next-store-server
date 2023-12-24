@@ -2,7 +2,9 @@ import categoryModel from '../Models/Category.js';
 
 export const insert = async (req, res, next) => {
     try {
-        const { title, href, img } = req.body;
+        const { title, href } = req.body;
+        const { filename: img } = req.file;
+        console.log(img);
         const category = await categoryModel.create({ title, href, img });
         if (category) {
             res.status(201).json(category)
