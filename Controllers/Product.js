@@ -39,7 +39,7 @@ export const remove = async (req, res, next) => {
 export const getLasted = async (req, res, next) => {
 
     try {
-        const lastedProducts = await productModel.find({}).limit(10).lean();
+        const lastedProducts = await productModel.find({ isOff: 0 }).sort({ _id: -1 }).limit(10).lean();
         if (lastedProducts) {
             res.status(200).json(lastedProducts);
         }
@@ -52,7 +52,7 @@ export const getLasted = async (req, res, next) => {
 export const getOffs = async (req, res, nxet) => {
 
     try {
-        const offProducts = await productModel.find({ isOff: 1 }).limit(10).lean();
+        const offProducts = await productModel.find({ isOff: 1 }).sort({ _id: -1 }).limit(10).lean();
         if (offProducts) {
             res.status(200).json(offProducts);
         }
