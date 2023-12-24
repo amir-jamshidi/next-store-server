@@ -24,4 +24,15 @@ export const remove = async (req, res, next) => {
     } catch (error) {
         next(error)
     }
-} 
+}
+
+export const get = async (req, res, next) => {
+    try {
+        const categories = await categoryModel.find({}).lean();
+        if (categories) {
+            res.status(200).json(categories);
+        }
+    } catch (error) {
+        next(error);
+    }
+}
