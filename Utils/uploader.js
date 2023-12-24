@@ -26,3 +26,13 @@ export const categoryStorage = multer.diskStorage({
         cb(null, filename + ext)
     }
 })
+export const sectionsStorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, path.join(__dirname, '..', '/public/media/sections'))
+    },
+    filename: function (req, file, cb) {
+        const filename = Date.now() + String(Math.floor(Math.random() * 100000))
+        const ext = path.extname(file.originalname);
+        cb(null, filename + ext)
+    }
+})
