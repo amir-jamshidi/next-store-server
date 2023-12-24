@@ -13,8 +13,11 @@ const schema = new mongoose.Schema({
     href: {
         type: String,
         required: true
+    },
+    mode: {
+        type: Number,
+        required: true
     }
-
 }, { timestamps: true })
 
 const model = mongoose.model('slider', schema);
