@@ -82,3 +82,6 @@ export const getDashboard = async (req, res, next) => {
 export const getOrders = async (req, res, next) => {
 
 }
+export const getUserInfos = async (req, res, next) => {
+
+}
