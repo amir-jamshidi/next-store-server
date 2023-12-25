@@ -79,3 +79,6 @@ export const validation = async (req, res, next) => {
 export const getDashboard = async (req, res, next) => {
 
 }
+export const getOrders = async (req, res, next) => {
+
+}
