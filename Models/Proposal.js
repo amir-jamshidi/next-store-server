@@ -16,6 +16,10 @@ const schema = new mongoose.Schema({
     href: {
         type: String,
         required: true
+    },
+    mode: {
+        type: Number,
+        required: true
     }
 })
 
