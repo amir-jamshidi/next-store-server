@@ -98,3 +98,7 @@ export const getBestLasted = async (req, res, next) => {
 export const getProduct = async (req, res, next) => {
 
 }
+
+export const getMoreSections = async (req, res, next) => {
+
+}
