@@ -76,3 +76,6 @@ export const validation = async (req, res, next) => {
         next(error)
     }
 }
+export const getDashboard = async (req, res, next) => {
+
+}
