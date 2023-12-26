@@ -22,7 +22,6 @@ export const get = async (req, res, next) => {
             while (copyProposal.length > 0) {
                 finalResult.push(copyProposal.slice(0, 2));
                 copyProposal = copyProposal.slice(2);
-                console.log(copyProposal.length);
             }
             res.status(200).json(finalResult);
         }
