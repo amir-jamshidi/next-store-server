@@ -96,7 +96,17 @@ export const getBestLasted = async (req, res, next) => {
 }
 
 export const getProduct = async (req, res, next) => {
-
+    try {
+        const { href } = req.params;
+        const product = await productModel.findOne({ href }).lean();
+        if (product) {
+            res.status(200).json(product);
+        } else {
+            res.status(404).json({ message: "product not found" });
+        }
+    } catch (error) {
+        next(error)
+    }
 }
 
 export const getMoreSections = async (req, res, next) => {
