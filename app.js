@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 import cors from 'cors'
 import mongoose from "mongoose";
 import dotenv from 'dotenv'
@@ -22,6 +23,7 @@ dotenv.config();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 //--
 app.use('/img/products', express.static(path.join(__dirname, 'public', 'media', 'products')));
 app.use('/img/sliders', express.static(path.join(__dirname, 'public', 'media', 'sliders')));

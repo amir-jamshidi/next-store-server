@@ -63,6 +63,9 @@ export const getOffs = async (req, res, nxet) => {
 }
 
 export const getPopular = async (req, res, next) => {
+    
+    console.log(req.cookies);
+    
     try {
         const popularProducts = await productModel.find({}).limit(10).lean();
         if (popularProducts) {
