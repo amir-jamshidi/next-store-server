@@ -8,9 +8,13 @@ const schema = new mongoose.Schema({
     href: {
         type: String,
         required: true
+    },
+    score: {
+        type: Number,
+        required: true
     }
 }, { timestamps: true });
 
-const model = mongoose.model('seller', schema);
+const model = mongoose.model('seller' , schema)
 
 export default model;

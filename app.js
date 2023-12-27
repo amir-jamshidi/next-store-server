@@ -13,6 +13,7 @@ import categoriesRouter from './Router/Category.js'
 import sliderRouter from './Router/Slider.js'
 import productRouter from './Router/Product.js'
 import proposalRouter from './Router/Proposal.js'
+import sellerRouter from './Router/Seller.js'
 //--
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename)
@@ -37,12 +38,14 @@ app.use('/img/sections', express.static(path.join(__dirname, 'public', 'media', 
     })
 })();
 //--
+
 app.use('/menus', menusRouter);
 app.use('/auth', authRouter);
 app.use('/category', categoriesRouter);
 app.use('/slider', sliderRouter);
 app.use('/product', productRouter);
 app.use('/proposal', proposalRouter);
+app.use('/seller', sellerRouter);
 //--
 app.use((err, req, res, next) => {
     res.status(400).json({ message: err.message })

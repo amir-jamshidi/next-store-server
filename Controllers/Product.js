@@ -63,9 +63,6 @@ export const getOffs = async (req, res, nxet) => {
 }
 
 export const getPopular = async (req, res, next) => {
-    
-    console.log(req.cookies);
-    
     try {
         const popularProducts = await productModel.find({}).limit(10).lean();
         if (popularProducts) {
@@ -101,7 +98,7 @@ export const getBestLasted = async (req, res, next) => {
 export const getProduct = async (req, res, next) => {
     try {
         const { href } = req.params;
-        const product = await productModel.findOne({ href }).lean();
+        const product = await productModel.findOne({ href }).populate('categoryID').populate('sellerID').lean();
         if (product) {
             res.status(200).json(product);
         } else {
