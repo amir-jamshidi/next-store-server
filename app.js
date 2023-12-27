@@ -14,6 +14,7 @@ import sliderRouter from './Router/Slider.js'
 import productRouter from './Router/Product.js'
 import proposalRouter from './Router/Proposal.js'
 import sellerRouter from './Router/Seller.js'
+import brandRouter from './Router/Brand.js'
 //--
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename)
@@ -46,6 +47,7 @@ app.use('/slider', sliderRouter);
 app.use('/product', productRouter);
 app.use('/proposal', proposalRouter);
 app.use('/seller', sellerRouter);
+app.use('/brand', brandRouter);
 //--
 app.use((err, req, res, next) => {
     res.status(400).json({ message: err.message })
