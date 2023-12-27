@@ -1,7 +1,8 @@
+import brandModel from '../Models/Brand.js';
 export const insert = async (req, res, next) => {
     try {
-        const { name } = req.body
-        const brand = await brandModel.create({ name });
+        const { name , nameEn} = req.body
+        const brand = await brandModel.create({ name , nameEn});
         if (brand) {
             res.status(201).json(brand);
         }

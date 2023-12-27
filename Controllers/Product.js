@@ -98,7 +98,7 @@ export const getBestLasted = async (req, res, next) => {
 export const getProduct = async (req, res, next) => {
     try {
         const { href } = req.params;
-        const product = await productModel.findOne({ href }).populate('categoryID').populate('sellerID').lean();
+        const product = await productModel.findOne({ href }).populate('categoryID').populate('sellerID').populate('brandID').lean();
         if (product) {
             res.status(200).json(product);
         } else {

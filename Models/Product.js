@@ -31,6 +31,10 @@ const schema = new mongoose.Schema({
         ref: 'seller',
         //required: true
     },
+    brandID: {
+        type: mongoose.Types.ObjectId,
+        ref: "brand"
+    },
     code: {
         type: String,
         required: true

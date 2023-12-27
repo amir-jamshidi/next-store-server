@@ -24,7 +24,6 @@ export const remove = async (req, res, next) => {
     }
 }
 export const get = async (req, res, next) => {
-
     try {
         const sliders = await sliderModel.find({}).lean();
         if (sliders) {
