@@ -109,6 +109,18 @@ export const getProduct = async (req, res, next) => {
     }
 }
 
+export const getSimilarProducts = async (req, res, next) => {
+    try {
+        const { categoryID } = req.params
+        const products = await productModel.find({ categoryID }).limit(10).lean();
+        if (products) {
+            res.status(200).json(products);
+        }
+    } catch (error) {
+        next(error);
+    }
+}
+
 export const getMoreSections = async (req, res, next) => {
 
 }
