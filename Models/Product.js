@@ -78,6 +78,10 @@ const schema = new mongoose.Schema({
     href: {
         type: String,
         required: true
+    },
+    review: {
+        type: String,
+        required: true
     }
 }, { timestamps: true });
 
