@@ -30,6 +30,7 @@ app.use(cookieParser());
 app.use('/img/products', express.static(path.join(__dirname, 'public', 'media', 'products')));
 app.use('/img/sliders', express.static(path.join(__dirname, 'public', 'media', 'sliders')));
 app.use('/img/sections', express.static(path.join(__dirname, 'public', 'media', 'sections')));
+app.use('/videos', express.static(path.join(__dirname, 'public', 'media', 'videos')));
 //--
 (async () => {
     mongoose.connect(`mongodb://127.0.0.1:27017/${process.env.MOGOURL}`).then(() => {

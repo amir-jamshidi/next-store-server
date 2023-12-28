@@ -122,7 +122,7 @@ export const getSimilarProducts = async (req, res, next) => {
     }
 }
 
-export const insertVideo = async (req, req, next) => {
+export const insertVideo = async (req, res, next) => {
     try {
         const { courseID, time, href, title } = req.body;
         const { filename: video } = req.file;
@@ -132,6 +132,18 @@ export const insertVideo = async (req, req, next) => {
         }
     } catch (error) {
         next(error)
+    }
+}
+
+export const getVideo = async (req, res, next) => {
+    try {
+        const { courseID } = req.params;
+        const video = await videoModel.find({ courseID }).lean();
+        if (video) {
+            res.status(200).json(video);
+        }
+    } catch (error) {
+        next(error);
     }
 }
 
