@@ -1,4 +1,5 @@
 import productModel from '../Models/Product.js'
+import videoModel from '../Models/Video.js'
 
 
 export const insert = async (req, res, next) => {
@@ -118,6 +119,19 @@ export const getSimilarProducts = async (req, res, next) => {
         }
     } catch (error) {
         next(error);
+    }
+}
+
+export const insertVideo = async (req, req, next) => {
+    try {
+        const { courseID, time, href, title } = req.body;
+        const { filename: video } = req.file;
+        const insertVideo = await videoModel.create({ courseID, time, href, title, video });
+        if (insertVideo) {
+            res.status(201).json(insertVideo);
+        }
+    } catch (error) {
+        next(error)
     }
 }
 
