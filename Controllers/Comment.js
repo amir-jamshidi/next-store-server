@@ -16,9 +16,11 @@ export const insert = async (req, res, next) => {
 
 export const get = async (req, res, next) => {
     try {
+        const { limit = 5 } = req.query;
         const { productID } = req.params;
-        const comments = await commentModel.find({ productID }).populate('creatorID').lean();
-        res.status(200).json(comments);
+        const comments = await commentModel.find({ productID }).populate('creatorID').limit(Number(limit)).lean();
+        const commentsCount = await commentModel.find({ productID }).countDocuments().lean();
+        res.status(200).json({ comments, count: commentsCount });
     } catch (error) {
         next(error);
     }
