@@ -25,3 +25,7 @@ export const get = async (req, res, next) => {
         next(error);
     }
 }
+
+export const remove = async (req, res, next) => {
+
+}
