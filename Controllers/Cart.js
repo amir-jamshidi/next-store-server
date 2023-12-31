@@ -25,7 +25,23 @@ export const insert = async (req, res, next) => {
 }
 
 export const remove = async (req, res, next) => {
+    try {
+        const { userID, productID } = req.body;
+        const remove = await cartModel.findOneAndDelete({ userID, productID }).lean();
+        if (remove) {
+            res.status(200).json(remove);
+        }
+    } catch (error) {
+        next(error)
+    }
+}
 
+export const removeAll = async (req, res, next) => {
+    try {
+
+    } catch (error) {
+
+    }
 }
 
 export const getAll = async (req, res, next) => {
