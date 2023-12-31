@@ -38,9 +38,11 @@ export const remove = async (req, res, next) => {
 
 export const removeAll = async (req, res, next) => {
     try {
-
+        const { userID } = req.body;
+        const removeAll = await cartModel.deleteMany({ userID }).lean();
+        res.status(200).json({ message: 'success' });
     } catch (error) {
-
+        next(error)
     }
 }
 
