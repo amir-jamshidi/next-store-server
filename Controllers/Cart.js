@@ -5,14 +5,14 @@ export const getCart = async (req, res, next) => {
         const cart = await cartModel.find({ userID: req.user._id }).populate({ path: 'productID', populate: { path: 'sellerID' } }).lean();
 
         const cartDetails = {
-            cardPrice: 0,
+            cartPrice: 0,
             itemsCount: 0,
             award: 0
         };
 
         cart.forEach(c => {
             c.totalPrice ||= c.productID.price * Number(c.count);
-            cartDetails['cardPrice'] += Number(c.totalPrice);
+            cartDetails['cartPrice'] += Number(c.totalPrice);
             cartDetails['itemsCount'] += Number(c.count);
             cartDetails['award'] += Number(c.productID.award * c.count);
         })
@@ -39,10 +39,22 @@ export const insert = async (req, res, next) => {
 
 export const remove = async (req, res, next) => {
     try {
-        const { userID, productID } = req.body;
-        const remove = await cartModel.findOneAndDelete({ userID, productID }).lean();
+        const { productID } = req.params;
+        const remove = await cartModel.findOneAndDelete({ userID: req.user._id, productID }).lean();
         if (remove) {
             res.status(200).json(remove);
+        }
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const editCart = async (req, res, next) => {
+    try {
+        const { action, productID } = req.body;
+        const cart = await cartModel.updateOne({ userID: req.user._id, productID }, { $inc: { count: action === 'PLUS' ? +1 : -1 } });
+        if (cart) {
+            res.status(200).json(cart);
         }
     } catch (error) {
         next(error)
