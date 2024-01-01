@@ -2,10 +2,23 @@ import cartModel from '../Models/Cart.js'
 
 export const getCart = async (req, res, next) => {
     try {
-        // const cart = await cartModel.find({ userID: req.user._id }).populate('productID', 'name isOff discount price href photos sellerID').lean();
         const cart = await cartModel.find({ userID: req.user._id }).populate({ path: 'productID', populate: { path: 'sellerID' } }).lean();
+
+        const cartDetails = {
+            cardPrice: 0,
+            itemsCount: 0,
+            award: 0
+        };
+
+        cart.forEach(c => {
+            c.totalPrice ||= c.productID.price * Number(c.count);
+            cartDetails['cardPrice'] += Number(c.totalPrice);
+            cartDetails['itemsCount'] += Number(c.count);
+            cartDetails['award'] += Number(c.productID.award * c.count);
+        })
+
         if (cart) {
-            res.status(200).json(cart);
+            res.status(200).json({ cart, cartDetails });
         }
     } catch (error) {
         next(error)
