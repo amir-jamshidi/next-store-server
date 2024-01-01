@@ -28,6 +28,14 @@ export const getCart = async (req, res, next) => {
 export const insert = async (req, res, next) => {
     try {
         const { productID, count } = req.body;
+        const isHasBefore = await cartModel.findOne({ productID, userID: req.user._id }).lean();
+        if (isHasBefore) {
+            const cart = await cartModel.findOneAndUpdate({ productID, userID: req.user._id }, { $inc: { count: +1 } }).lean();
+            if (cart) {
+                res.status(201).json(cart);
+            }
+            return
+        }
         const cart = await cartModel.create({ productID, userID: req.user._id, count });
         if (cart) {
             res.status(201).json(cart);
