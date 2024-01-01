@@ -43,7 +43,6 @@ export const login = async (req, res, next) => {
 
 }
 export const getMe = (req, res, next) => {
-    console.log(req.user);
     res.status(200).json({ userInfo: req.user })
 }
 export const validation = async (req, res, next) => {

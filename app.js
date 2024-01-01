@@ -16,6 +16,7 @@ import proposalRouter from './Router/Proposal.js'
 import sellerRouter from './Router/Seller.js'
 import brandRouter from './Router/Brand.js'
 import commentRouter from './Router/Comment.js'
+import cartRouter from './Router/Cart.js'
 //--
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename)
@@ -51,6 +52,7 @@ app.use('/proposal', proposalRouter);
 app.use('/seller', sellerRouter);
 app.use('/brand', brandRouter);
 app.use('/comment', commentRouter);
+app.use('/cart', cartRouter);
 //--
 app.use((err, req, res, next) => {
     res.status(400).json({ message: err.message })

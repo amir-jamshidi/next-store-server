@@ -1,4 +1,4 @@
-import mongoose, { Mongoose } from "mongoose";
+import mongoose from "mongoose";
 
 const schema = new mongoose.Schema({
     productID: {
@@ -7,17 +7,13 @@ const schema = new mongoose.Schema({
         required: true
     },
     userID: {
-        type: Mongoose.Types.ObjectId,
+        type: mongoose.Types.ObjectId,
         ref: 'user',
         required: true
     },
     count: {
         type: Number,
         default: 1
-    },
-    total: {
-        type: Number,
-        required: true
     }
 }, { timestamps: true });
 
