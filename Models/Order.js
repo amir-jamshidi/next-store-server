@@ -1,4 +1,3 @@
-import { number } from "joi";
 import mongoose from "mongoose";
 
 
@@ -22,7 +21,7 @@ const productSchema = new mongoose.Schema({
     },
     color: {
         type: String,
-        required: true
+        required: false
     }
 })
 
@@ -43,7 +42,7 @@ const schema = new mongoose.Schema({
         required: true
     },
     code: {
-        type: number,
+        type: Number,
         required: true
     },
     price: {
