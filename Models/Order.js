@@ -52,11 +52,13 @@ const schema = new mongoose.Schema({
     state: {
 
     },
-    sendMethod: {
-
+    sendMethodID: {
+        type: mongoose.Types.ObjectId,
+        ref: 'sendMethod'
     },
-    peymentMethod: {
-
+    award: {
+        type: Number,
+        required: true
     }
 })
 
