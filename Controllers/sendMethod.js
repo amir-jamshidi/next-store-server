@@ -11,3 +11,12 @@ export const insert = async (req, res, next) => {
         next(error);
     }
 }
+
+export const get = async (req, res, next) => {
+    try {
+        const methods = await sendMethodModel.find({}).lean();
+        res.status(200).json(methods)
+    } catch (error) {
+        next(error);
+    }
+}
