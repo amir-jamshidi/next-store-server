@@ -1,4 +1,5 @@
 import preUserModel from '../Models/PreUser.js'
+import addressModel from '../Models/Address.js'
 import userModel from '../Models/User.js'
 import { codeGenerator } from '../Utils/codeGenerator.js'
 import jwt from 'jsonwebtoken'
@@ -77,6 +78,31 @@ export const validation = async (req, res, next) => {
         next(error)
     }
 }
+
+export const addAddress = async (req, res, next) => {
+    try {
+        const { country, state, city, avenue, alley, description } = req.body
+        const address = await addressModel.create({ userID: req.user._id, country, state, city, avenue, alley, description })
+        if (address) {
+            res.status(201).json(address)
+        }
+    } catch (error) {
+        next(error);
+    }
+
+}
+
+export const getAddress = async (req, res, next) => {
+    try {
+        const addresses = await addressModel.find({ userID: req.user._id }).lean();
+        if (addresses) {
+            res.status(200).json(addresses);
+        }
+    } catch (error) {
+        next(error)
+    }
+}
+
 export const getDashboard = async (req, res, next) => {
 
 }
