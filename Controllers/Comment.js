@@ -35,3 +35,11 @@ export const getAll = async (req, res, next) => {
 
 export const deleteAll = async (req, res, next) => {
 }
+
+export const answer = async (req, res, next) => {
+    try {
+
+    } catch (error) {
+        next(error)
+    }
+}
