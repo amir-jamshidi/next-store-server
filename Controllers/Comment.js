@@ -2,9 +2,10 @@ import commentModel from '../Models/Comment.js';
 
 export const insert = async (req, res, next) => {
     try {
-        const { body, score, productID } = req.body;
+        let { body, score = 5, productID } = req.body;
+        score = score === -1 ? 5 : score
         const { files } = req;
-        const photos = files.map(file => file.filename);
+        const photos = files?.map(file => file.filename) || [];
         const comment = await commentModel.create({ body, score, productID, creatorID: req.user._id, photos })
         if (comment) {
             res.status(201).json(comment);
