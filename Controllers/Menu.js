@@ -21,3 +21,7 @@ export const get = async (req, res, next) => {
         next(err);
     }
 }
+
+export const insertSubMenu = async (req, res, next) => {
+
+}
