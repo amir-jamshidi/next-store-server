@@ -46,7 +46,7 @@ export const videoStorage = multer.diskStorage({
         cb(null, filename + ext)
     }
 })
-export const commentStorage = multer.diskStorage({ 
+export const commentStorage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, path.join(__dirname, '..', '/public/media/sections'))
     },
