@@ -47,3 +47,7 @@ export const removeAll = async (req, res, next) => {
 export const editAll = async (req, res, next) => {
 
 }
+
+export const n = ()=>{
+    
+}
