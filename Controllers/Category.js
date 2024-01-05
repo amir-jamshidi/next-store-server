@@ -36,3 +36,7 @@ export const get = async (req, res, next) => {
         next(error);
     }
 }
+
+export const getAll = async (req, res, next) => {
+
+}
