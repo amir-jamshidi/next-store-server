@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 const schema = new mongoose.Schema({
-
     title: {
         type: String,
         required: true
@@ -10,8 +9,10 @@ const schema = new mongoose.Schema({
         type: String,
         required: true
     },
-
-
+    categoryID: {
+        type: mongoose.Types.ObjectId,
+        ref: 'category'
+    }
 }, { timestamps: true })
 
 const model = mongoose.model('menu', schema);

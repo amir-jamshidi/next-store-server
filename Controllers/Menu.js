@@ -2,8 +2,8 @@ import menuModel from '../Models/Menu.js'
 
 export const insert = async (req, res, next) => {
     try {
-        const { title, href } = req.body
-        const menu = await menuModel.create({ title, href });
+        const { title, href, categoryID } = req.body
+        const menu = await menuModel.create({ title, href, categoryID });
         if (menu) {
             res.status(201).json(menu);
         }
