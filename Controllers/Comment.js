@@ -1,4 +1,5 @@
 import commentModel from '../Models/Comment.js';
+import converToPersian from '../Utils/PersianDate.js';
 
 export const insert = async (req, res, next) => {
     try {
@@ -20,6 +21,9 @@ export const get = async (req, res, next) => {
         const { limit = 5 } = req.query;
         const { productID } = req.params;
         const comments = await commentModel.find({ productID }).populate('creatorID').sort({ _id: -1 }).limit(Number(limit)).lean();
+        comments.forEach(comment => {
+            comment.createdAt = converToPersian(comment.createdAt);
+        })
         const commentsCount = await commentModel.find({ productID }).countDocuments().lean();
         res.status(200).json({ comments, count: commentsCount });
     } catch (error) {
