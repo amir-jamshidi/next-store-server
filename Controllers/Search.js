@@ -16,3 +16,6 @@ export const search = async (req, res, next) => {
 export const searchProducts = async (req, res, nexy) => {
 
 }
+export const searchCategories = async (req, res, nexy) => {
+
+}
