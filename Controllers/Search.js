@@ -12,3 +12,7 @@ export const search = async (req, res, next) => {
 
     }
 }
+
+export const searchProducts = async (req, res, nexy) => {
+
+}
