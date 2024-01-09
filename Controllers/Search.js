@@ -22,3 +22,6 @@ export const searchCategories = async (req, res, nexy) => {
 export const searchComments = async (req, res, nexy) => {
 
 }
+export const searchphotos = async (req, res, nexy) => {
+
+}
