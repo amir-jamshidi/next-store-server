@@ -19,3 +19,6 @@ export const searchProducts = async (req, res, nexy) => {
 export const searchCategories = async (req, res, nexy) => {
 
 }
+export const searchComments = async (req, res, nexy) => {
+
+}
