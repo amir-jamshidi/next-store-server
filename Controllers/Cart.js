@@ -11,7 +11,7 @@ export const getCart = async (req, res, next) => {
         };
 
         cart.forEach(c => {
-            c.totalPrice ||= c.productID.price * Number(c.count);
+            c.totalPrice ||= c.productID.isOff === 1 ? (Number(c.productID.price) - (Number(c.productID.price) * Number(c.productID.discount)) / 100) : c.productID.price * Number(c.count);
             cartDetails['cartPrice'] += Number(c.totalPrice);
             cartDetails['itemsCount'] += Number(c.count);
             cartDetails['award'] += Number(c.productID.award * c.count);
@@ -76,5 +76,13 @@ export const removeAll = async (req, res, next) => {
         res.status(200).json({ message: 'success' });
     } catch (error) {
         next(error)
+    }
+}
+
+export const getAll = async (req, res, next) => {
+    try {
+
+    } catch (error) {
+
     }
 }
