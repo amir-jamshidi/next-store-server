@@ -19,7 +19,8 @@ export const insert = async (req, res, next) => {
 
 export const getOrders = async (req, res, next) => {
     try {
-
+        const orders = await orderModel.find({ userID: req.user._id }).populate({ path: 'productsDetails', populate: { path: 'productID' } }).populate('addressID').populate('sendMethodID').lean();
+        res.status(200).json(orders)
     } catch (error) {
         next(error);
     }
