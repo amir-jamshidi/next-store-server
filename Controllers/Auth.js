@@ -3,6 +3,7 @@ import addressModel from '../Models/Address.js'
 import userModel from '../Models/User.js'
 import { codeGenerator } from '../Utils/codeGenerator.js'
 import jwt from 'jsonwebtoken'
+import converToPersian from './../Utils/PersianDate.js';
 
 export const register = async (req, res, next) => {
     try {
@@ -95,6 +96,9 @@ export const addAddress = async (req, res, next) => {
 export const getAddress = async (req, res, next) => {
     try {
         const addresses = await addressModel.find({ userID: req.user._id }).lean();
+        addresses.forEach(address => {
+            address.createdAt = converToPersian(address.createdAt);
+        })
         if (addresses) {
             res.status(200).json(addresses);
         }
