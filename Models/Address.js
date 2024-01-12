@@ -26,6 +26,10 @@ const schema = new mongoose.Schema({
         type: String,
         required: true
     },
+    postalCode: {
+        type: String,
+        required: true
+    },
     description: {
         type: String,
         required: true
