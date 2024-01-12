@@ -60,7 +60,7 @@ const schema = new mongoose.Schema({
         type: Number,
         required: true
     }
-})
+}, { timestamps: true })
 
 const model = mongoose.model('order', schema);
 export default model

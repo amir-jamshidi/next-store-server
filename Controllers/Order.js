@@ -1,5 +1,6 @@
 import orderModel from '../Models/Order.js'
 import cartModel from '../Models/Cart.js'
+import converToPersian from './../Utils/PersianDate.js';
 export const insert = async (req, res, next) => {
 
     try {
@@ -20,6 +21,9 @@ export const insert = async (req, res, next) => {
 export const getOrders = async (req, res, next) => {
     try {
         const orders = await orderModel.find({ userID: req.user._id }).populate({ path: 'productsDetails', populate: { path: 'productID' } }).populate('addressID').populate('sendMethodID').lean();
+        orders.forEach(order => {
+            order.createdAt = converToPersian(order.createdAt);
+        })
         res.status(200).json(orders)
     } catch (error) {
         next(error);
