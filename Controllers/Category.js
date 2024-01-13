@@ -38,6 +38,13 @@ export const get = async (req, res, next) => {
 }
 
 export const getAll = async (req, res , next)=>{
-    
+    try {
+        const categories = await categoryModel.find({}).lean();
+        if (categories) {
+            res.status(200).json(categories);
+        }
+    } catch (error) {
+        next(error);
+    }
 }
 
