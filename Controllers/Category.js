@@ -28,12 +28,16 @@ export const remove = async (req, res, next) => {
 
 export const get = async (req, res, next) => {
     try {
-        const categories = await categoryModel.find({}).lean();
+        const categories = await categoryModel.find({}).limit(6).lean();
         if (categories) {
             res.status(200).json(categories);
         }
     } catch (error) {
         next(error);
     }
+}
+
+export const getAll = async (req, res , next)=>{
+    
 }
 
