@@ -59,6 +59,11 @@ const schema = new mongoose.Schema({
     award: {
         type: Number,
         required: true
+    },
+    orderStatusID: {
+        type: mongoose.Types.ObjectId,
+        ref: 'orderStatus',
+        required: true
     }
 }, { timestamps: true })
 

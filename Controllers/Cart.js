@@ -5,13 +5,15 @@ export const getCart = async (req, res, next) => {
         const cart = await cartModel.find({ userID: req.user._id }).populate({ path: 'productID', populate: { path: 'sellerID' } }).lean();
 
         const cartDetails = {
+            totalPrice: 0,
             cartPrice: 0,
             itemsCount: 0,
             award: 0
         };
 
         cart.forEach(c => {
-            c.totalPrice ||= c.productID.isOff === 1 ? (Number(c.productID.price) - (Number(c.productID.price) * Number(c.productID.discount)) / 100) : c.productID.price * Number(c.count);
+            c.totalPrice ||= c.productID.isOff === 1 ? (Number(c.productID.price) - (Number(c.productID.price) * Number(c.productID.discount)) / 100) * Number(c.count) : c.productID.price * Number(c.count);
+            c.price ||= c.productID.isOff === 1 ? (Number(c.productID.price) - (Number(c.productID.price) * Number(c.productID.discount)) / 100) : c.productID.price
             cartDetails['cartPrice'] += Number(c.totalPrice);
             cartDetails['itemsCount'] += Number(c.count);
             cartDetails['award'] += Number(c.productID.award * c.count);
