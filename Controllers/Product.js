@@ -170,6 +170,17 @@ export const addToFavorite = async (req, res, next) => {
             res.status(201).json(favorite);
         }
     } catch (error) {
+        next(error)
+    }
+}
+
+export const getFavorites = async (req, res, next) => {
+    try {
+        const favorites = await favoriteModel.find({ userID: req.user._id });
+        if (favorites) {
+            res.status(200).json(favorites);
+        }
+    } catch (error) {
 
     }
 }
