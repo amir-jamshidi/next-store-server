@@ -1,6 +1,8 @@
 import preUserModel from '../Models/PreUser.js'
 import addressModel from '../Models/Address.js'
 import userModel from '../Models/User.js'
+import orderModel from '../Models/Order.js'
+import ticketModel from '../Models/Ticket.js'
 import { codeGenerator } from '../Utils/codeGenerator.js'
 import jwt from 'jsonwebtoken'
 import converToPersian from './../Utils/PersianDate.js';
@@ -79,11 +81,10 @@ export const validation = async (req, res, next) => {
         next(error)
     }
 }
-
 export const addAddress = async (req, res, next) => {
     try {
-        const { country, state, city, avenue, alley, description } = req.body
-        const address = await addressModel.create({ userID: req.user._id, country, state, city, avenue, alley, description })
+        const { country, state, city, avenue, alley, description, postalCode, reciver } = req.body
+        const address = await addressModel.create({ userID: req.user._id, country, state, city, avenue, alley, description, postalCode, reciver })
         if (address) {
             res.status(201).json(address)
         }
@@ -92,7 +93,15 @@ export const addAddress = async (req, res, next) => {
     }
 
 }
-
+export const deleteAddress = async (req, res, next) => {
+    try {
+        const { addressID } = req.params;
+        await addressModel.findOneAndDelete({ userID: req.user._id, _id: addressID });
+        res.status(200).json({ message: 'deleted' });
+    } catch (error) {
+        next(error)
+    }
+}
 export const getAddress = async (req, res, next) => {
     try {
         const addresses = await addressModel.find({ userID: req.user._id }).lean();
@@ -106,22 +115,33 @@ export const getAddress = async (req, res, next) => {
         next(error)
     }
 }
-
 export const changeFullname = async (req, res, next) => {
     try {
         const { fullname } = req.body;
-        const user = userModel.findOneAndUpdate({ _id: req.user._id }, { fullname }).lean();
+        const user = await userModel.findOneAndUpdate({ _id: req.user._id }, { fullname });
         if (user) {
             res.status(200).json(user);
         }
     } catch (error) {
         next(error);
     }
-
 }
 
 export const getDashboard = async (req, res, next) => {
-
+    try {
+        const ordersUser = await orderModel.find({ userID: req.user._id }).populate({ path: 'productsDetails', populate: { path: 'productID' } }).populate('addressID').populate('sendMethodID').populate('orderStatusID').lean()
+        const orders = ordersUser.slice(-3)
+        orders.forEach(order => { order.createdAt = converToPersian(order.createdAt) });
+        const awardCount = ordersUser.reduce((sum, cur) => sum + cur.award, 0);
+        const orderCount = ordersUser.length;
+        const ticketUser = await ticketModel.find({ userID: req.user._id }).lean();
+        const tickets = ticketUser.slice(-3)
+        tickets.forEach(ticket => { ticket.createdAt = converToPersian(ticket.createdAt) })
+        const ticketCount = ticketUser.length;
+        res.status(200).json({ tickets, orders, orderCount, awardCount, ticketCount });
+    } catch (error) {
+        next(error)
+    }
 }
 export const getOrders = async (req, res, next) => {
 
