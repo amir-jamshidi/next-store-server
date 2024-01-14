@@ -107,6 +107,19 @@ export const getAddress = async (req, res, next) => {
     }
 }
 
+export const changeFullname = async (req, res, next) => {
+    try {
+        const { fullname } = req.body;
+        const user = userModel.findOneAndUpdate({ _id: req.user._id }, { fullname }).lean();
+        if (user) {
+            res.status(200).json(user);
+        }
+    } catch (error) {
+        next(error);
+    }
+
+}
+
 export const getDashboard = async (req, res, next) => {
 
 }
