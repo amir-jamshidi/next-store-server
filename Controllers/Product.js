@@ -1,5 +1,7 @@
 import productModel from '../Models/Product.js'
 import videoModel from '../Models/Video.js'
+import categoryModel from '../Models/Category.js'
+import favoriteModel from '../Models/Favorite.js';
 
 
 export const insert = async (req, res, next) => {
@@ -144,6 +146,31 @@ export const getVideo = async (req, res, next) => {
         }
     } catch (error) {
         next(error);
+    }
+}
+
+export const getProductsByCategory = async (req, res, next) => {
+    try {
+        const { href } = req.params;
+        const { _id: categoryID } = await categoryModel.findOne({ href }).lean();
+        const products = await productModel.find({ categoryID }).populate('categoryID').lean();
+        if (products) {
+            res.status(200).json(products);
+        }
+    } catch (error) {
+        next(error);
+    }
+}
+
+export const addToFavorite = async (req, res, next) => {
+    try {
+        const { productID } = req.body;
+        const favorite = await favoriteModel.create({ userID: req.user._id, productID });
+        if (favorite) {
+            res.status(201).json(favorite);
+        }
+    } catch (error) {
+
     }
 }
 

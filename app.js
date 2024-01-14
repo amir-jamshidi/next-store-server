@@ -20,6 +20,7 @@ import cartRouter from './Router/Cart.js'
 import orderRouter from './Router/Order.js'
 import sendMenthodRouter from './Router/SendMethod.js'
 import searchRouter from './Router/Search.js'
+import ticketRouter from './Router/Ticket.js'
 //--
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename)
@@ -59,6 +60,7 @@ app.use('/cart', cartRouter);
 app.use('/order', orderRouter);
 app.use('/method', sendMenthodRouter);
 app.use('/search', searchRouter);
+app.use('/ticket', ticketRouter);
 //--
 app.use((err, req, res, next) => {
     res.status(400).json({ message: err.message })

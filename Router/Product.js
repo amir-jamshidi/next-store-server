@@ -1,5 +1,5 @@
 import express from 'express';
-import { getBestLasted, getBestSell, getLasted, getOffs, getPopular, getProduct, getSimilarProducts, getVideo, insert, insertVideo, remove } from '../Controllers/Product.js';
+import { addToFavorite, getBestLasted, getBestSell, getLasted, getOffs, getPopular, getProduct, getProductsByCategory, getSimilarProducts, getVideo, insert, insertVideo, remove } from '../Controllers/Product.js';
 import multer from 'multer';
 import { sliderStorage, videoStorage } from '../Utils/uploader.js';
 import { isLogin } from '../Middlewares/isLogin.js';
@@ -17,4 +17,6 @@ router.route('/:href').get(getProduct);
 router.route('/similar/:categoryID').get(getSimilarProducts);
 router.route('/video').post(isLogin, isAdmin, multer({ storage: videoStorage }).single('video'), insertVideo);
 router.route('/video/:courseID').get(getVideo);
+router.route('/category/:href').get(getProductsByCategory)
+router.route('/favorite').post(isLogin, addToFavorite)
 export default router
