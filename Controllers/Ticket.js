@@ -42,3 +42,14 @@ export const getOne = async (req, res, next) => {
     }
 
 }
+
+export const getTicketSections = async (req, res, next) => {
+    try {
+        const sections = await ticketSectionModel.find({}).lean();
+        res.status(200).json(sections);
+    } catch (error) {
+        next(error);
+    }
+
+
+}

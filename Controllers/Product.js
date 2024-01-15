@@ -199,7 +199,6 @@ export const getAllOffsProducts = async (req, res, next) => {
         if (products) {
             res.status(200).json({ products, productsCount });
         }
-        console.log({ sort });
     } catch (error) {
         next(error)
     }
