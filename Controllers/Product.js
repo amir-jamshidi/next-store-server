@@ -188,3 +188,14 @@ export const getFavorites = async (req, res, next) => {
 export const getMoreSections = async (req, res, next) => {
 
 }
+
+export const getAllOffsProducts = async (req, res, next) => {
+    try {
+        const products = await productModel.find({ isOff: 1 }).lean();
+        if (products) {
+            res.status(200).json(products);
+        }
+    } catch (error) {
+        next(error)
+    }
+}
