@@ -2,6 +2,7 @@ import productModel from '../Models/Product.js'
 import videoModel from '../Models/Video.js'
 import categoryModel from '../Models/Category.js'
 import favoriteModel from '../Models/Favorite.js';
+import filterProduct from './../Utils/FilterProduct.js';
 
 
 export const insert = async (req, res, next) => {
@@ -191,11 +192,24 @@ export const getMoreSections = async (req, res, next) => {
 
 export const getAllOffsProducts = async (req, res, next) => {
     try {
-        const products = await productModel.find({ isOff: 1 }).lean();
+        const { limit, filter = 'normal' } = req.query;
+        let sort = filterProduct(filter);
+        const products = await productModel.find({ isOff: 1 }).sort(sort).limit(Number(limit)).lean();
+        const productsCount = await productModel.find({ isOff: 1 }).countDocuments().lean();
         if (products) {
-            res.status(200).json(products);
+            res.status(200).json({ products, productsCount });
         }
+        console.log({ sort });
     } catch (error) {
         next(error)
+    }
+}
+
+export const getAllProducts = async (req, res, next) => {
+    try {
+        const products = await productModel.find({}).lean();
+        res.status(200).json(products);
+    } catch (error) {
+        next(error);
     }
 }

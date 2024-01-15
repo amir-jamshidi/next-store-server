@@ -82,6 +82,10 @@ const schema = new mongoose.Schema({
     review: {
         type: String,
         required: true
+    },
+    sellCount: {
+        type: Number,
+        default: 0
     }
 }, { timestamps: true });
 
