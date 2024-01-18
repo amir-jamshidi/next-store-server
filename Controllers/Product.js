@@ -166,6 +166,11 @@ export const getProductsByCategory = async (req, res, next) => {
 export const addToFavorite = async (req, res, next) => {
     try {
         const { productID } = req.body;
+        const isHas = await favoriteModel.findOne({ productID }).lean();
+        if (isHas) {
+            res.status(400).json({ message: 'alreay' })
+            return
+        }
         const favorite = await favoriteModel.create({ userID: req.user._id, productID });
         if (favorite) {
             res.status(201).json(favorite);
@@ -180,6 +185,21 @@ export const getFavorites = async (req, res, next) => {
         const favorites = await favoriteModel.find({ userID: req.user._id }).populate('productID').lean();
         if (favorites) {
             res.status(200).json(favorites);
+        }
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const getOneFavorites = async (req, res, next) => {
+    try {
+        const { productID } = req.params
+        const isHas = await favoriteModel.findOne({ productID });
+        if (isHas) {
+            res.status(200).json({ message: 'has' });
+            return
+        } else {
+            res.status(400).json({ message: 'not has' })
         }
     } catch (error) {
         next(error)
