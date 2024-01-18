@@ -221,3 +221,7 @@ export const getAllProducts = async (req, res, next) => {
 export const deleteAll = async (req, res, next) => {
 
 }
+
+export const editProduct = async (req, res, next) => {
+
+}
