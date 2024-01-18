@@ -10,10 +10,10 @@ const filterProduct = (filter) => {
             return { score: -1 };
         }
         case 'expensive': {
-            return { price: 1 };
+            return { price: -1 };
         }
         case 'inexpensive': {
-            return { price: -1 };
+            return { price: 1 };
         }
         default: {
             return { id: -1 }

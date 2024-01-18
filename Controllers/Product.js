@@ -206,9 +206,18 @@ export const getAllOffsProducts = async (req, res, next) => {
 
 export const getAllProducts = async (req, res, next) => {
     try {
-        const products = await productModel.find({}).lean();
-        res.status(200).json(products);
+        const { limit, filter = 'new' } = req.query;
+        let sort = filterProduct(filter);
+        const products = await productModel.find({}).limit(Number(limit)).sort(sort).lean();
+        const productsCount = await productModel.find({}).countDocuments().lean();
+        if (products) {
+            res.status(200).json({ products, productsCount });
+        }
     } catch (error) {
-        next(error);
+        next(error)
     }
+}
+
+export const deleteAll = async (req, res, next) => {
+
 }
