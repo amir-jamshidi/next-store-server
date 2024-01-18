@@ -196,10 +196,22 @@ export const getOneFavorites = async (req, res, next) => {
         const { productID } = req.params
         const isHas = await favoriteModel.findOne({ productID });
         if (isHas) {
-            res.status(200).json({ message: 'has' });
+            res.status(200).json({ message: 1 });
             return
         } else {
-            res.status(400).json({ message: 'not has' })
+            res.status(200).json({ message: 0 })
+        }
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const removeFav = async (req, res, next) => {
+    try {
+        const { productID } = req.params
+        const isHas = await favoriteModel.findOneAndDelete({ productID });
+        if (isHas) {
+            res.status(200).json(isHas);
         }
     } catch (error) {
         next(error)
