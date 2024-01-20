@@ -249,3 +249,10 @@ export const getAllProducts = async (req, res, next) => {
         next(error)
     }
 }
+
+
+
+
+export const changePrice = async (req, res next) => {
+
+}
