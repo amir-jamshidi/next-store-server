@@ -262,6 +262,3 @@ export const changeCover = async (req, res, next) => {
 export const changeName = async (req, res, next) => {
 
 }
-export const changeDiscount = async (req, res, next) => {
-
-}
