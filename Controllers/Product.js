@@ -256,7 +256,5 @@ export const getAllProducts = async (req, res, next) => {
 export const changePrice = async (req, res, next) => {
 
 }
-export const changeCover = async (req, res, next) => {
 
-}
 
