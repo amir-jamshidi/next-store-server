@@ -40,3 +40,7 @@ export const get = async (req, res, next) => {
 export const insertSubMenu = async (req, res, next) => {
 
 }
+
+export const editMenu = async (req, res, next) => {
+
+} 
