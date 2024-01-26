@@ -48,3 +48,7 @@ export const editMenu = async (req, res, next) => {
 export const removeMenu = async (req, res, next) => {
 
 }
+
+export const editSubMenu = async (req, res, next) => {
+
+}
