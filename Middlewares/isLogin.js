@@ -6,7 +6,7 @@ export const isLogin = async (req, res, next) => {
     authorization = authorization.split(' ');
 
     if (authorization.length < 2) {
-        return res.status(409).json({ message: "This Route Is Protected" });
+        return res.status(401).json({ message: "This Route Is Protected" });
     }
     const [, token] = authorization;
     try {
