@@ -242,8 +242,9 @@ export const getAllOffsProducts = async (req, res, next) => {
 export const getAllProducts = async (req, res, next) => {
     try {
         const { limit, filter = 'new' } = req.query;
+        console.log(limit);
         let sort = filterProduct(filter);
-        const products = await productModel.find({}).limit(Number(limit)).sort(sort).lean();
+        const products = await productModel.find({}).limit(limit).sort(sort).lean();
         const productsCount = await productModel.find({}).countDocuments().lean();
         if (products) {
             res.status(200).json({ products, productsCount });
