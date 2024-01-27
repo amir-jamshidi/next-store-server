@@ -2,6 +2,11 @@ import cartModel from '../Models/Cart.js'
 
 export const getCart = async (req, res, next) => {
     try {
+
+        if (!req.user) {
+            return res.status(200).json({ cart: [], cartDetails: {} })
+        }
+
         const cart = await cartModel.find({ userID: req.user._id }).populate({ path: 'productID', populate: { path: 'sellerID' } }).lean();
 
         const cartDetails = {
