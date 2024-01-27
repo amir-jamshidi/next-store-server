@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import { addressSchema } from './Address.js'
 
 const productSchema = new mongoose.Schema({
     productID: {
@@ -32,11 +32,7 @@ const schema = new mongoose.Schema({
         ref: 'user',
         required: true
     },
-    addressID: {
-        type: mongoose.Types.ObjectId,
-        ref: 'address',
-        required: true
-    },
+    addressID: addressSchema,
     isSuccess: {
         type: Number,
         required: true

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const schema = new mongoose.Schema({
+export const addressSchema = new mongoose.Schema({
     userID: {
         type: mongoose.Types.ObjectId,
         ref: 'user',
@@ -36,7 +36,7 @@ const schema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
+const model = mongoose.model('address', addressSchema);
 
-const model = mongoose.model('address', schema);
 
 export default model;
