@@ -4,13 +4,14 @@ import multer from 'multer';
 import { sliderStorage, videoStorage } from '../Utils/uploader.js';
 import { isLogin } from '../Middlewares/isLogin.js';
 import { isAdmin } from '../Middlewares/isAdmin.js';
+import { isOptionalLogin } from '../Middlewares/isOptionalLogin.js';
 
 const router = express.Router();
 
 router.route('/').post(isLogin, isAdmin, multer({ storage: sliderStorage }).array('photos', 4), insert);
 router.route('/all').get(getAllProducts);
 router.route('/favorite').post(isLogin, addToFavorite).get(isLogin, getFavorites);
-router.route('/favorite/:productID').get(isLogin, getOneFavorites).delete(isLogin, removeFav);
+router.route('/favorite/:productID').get(isOptionalLogin, getOneFavorites).delete(isLogin, removeFav);
 router.route('/lasted').get(getLasted);
 router.route('/offs').get(getOffs);
 router.route('/bestseller').get(getBestSell);

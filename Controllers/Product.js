@@ -193,6 +193,9 @@ export const getFavorites = async (req, res, next) => {
 
 export const getOneFavorites = async (req, res, next) => {
     try {
+        if (!req.user) {
+            return res.status(200).json({ message: 0 });
+        }
         const { productID } = req.params
         const isHas = await favoriteModel.findOne({ productID });
         if (isHas) {
