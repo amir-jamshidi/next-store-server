@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import ticketModel from '../Models/Ticket.js'
 import ticketSectionModel from '../Models/TicketSection.js'
 import converToPersian from '../Utils/PersianDate.js';
@@ -32,6 +33,9 @@ export const get = async (req, res, next) => {
 export const getOne = async (req, res, next) => {
     try {
         const { ticketID } = req.params;
+        if (!mongoose.Types.ObjectId.isValid(ticketID)) {
+            return res.status(404).json({ message: 'not valid' });
+        }
         const ticket = await ticketModel.findOne({ _id: ticketID, userID: req.user._id }).populate('orderID').populate('ticketSectionID').lean();
         ticket.createdAt = converToPersian(ticket.createdAt);
         if (ticket) {
