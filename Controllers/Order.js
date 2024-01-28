@@ -3,6 +3,7 @@ import cartModel from '../Models/Cart.js'
 import orderStatusModel from '../Models/OrderStatus.js'
 import addressModel from '../Models/Address.js'
 import converToPersian from './../Utils/PersianDate.js';
+import mongoose from 'mongoose';
 export const insert = async (req, res, next) => {
 
     try {
@@ -24,7 +25,7 @@ export const insert = async (req, res, next) => {
 
 export const getOrders = async (req, res, next) => {
     try {
-        const orders = await orderModel.find({ userID: req.user._id }).populate({ path: 'productsDetails', populate: { path: 'productID' } }).populate('addressID').populate('sendMethodID').populate('orderStatusID').lean();
+        const orders = await orderModel.find({ userID: req.user._id }).sort({ _id: -1 }).populate({ path: 'productsDetails', populate: { path: 'productID' } }).populate('addressID').populate('sendMethodID').populate('orderStatusID').lean();
         orders.forEach(order => {
             order.createdAt = converToPersian(order.createdAt);
         })
@@ -37,10 +38,15 @@ export const getOrders = async (req, res, next) => {
 export const getOne = async (req, res, next) => {
     try {
         const { orderID } = req.params;
+        if (!mongoose.Types.ObjectId.isValid(orderID)) {
+            return res.status(404).json({ message: 'not valid' });
+        }
         const order = await orderModel.findOne({ _id: orderID, userID: req.user._id }).populate({ path: 'productsDetails', populate: { path: 'productID' } }).populate('addressID').populate('sendMethodID').populate('orderStatusID').lean();
-        order.createdAt = converToPersian(order.createdAt);
         if (order) {
-            res.status(200).json(order)
+            order.createdAt = converToPersian(order.createdAt);
+            return res.status(200).json(order)
+        } else {
+            return res.status(404).json({ message: 'not found' });
         }
     } catch (error) {
         next(error);

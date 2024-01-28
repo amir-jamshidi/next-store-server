@@ -39,7 +39,7 @@ export const getOne = async (req, res, next) => {
         const ticket = await ticketModel.findOne({ _id: ticketID, userID: req.user._id }).populate('orderID').populate('ticketSectionID').lean();
         if (ticket) {
             ticket.createdAt = converToPersian(ticket.createdAt);
-            res.status(200).json(ticket);
+            return res.status(200).json(ticket);
         } else {
             return res.status(404).json({ message: 'not found' });
         }
