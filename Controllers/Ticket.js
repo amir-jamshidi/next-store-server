@@ -18,7 +18,7 @@ export const insert = async (req, res, next) => {
 
 export const get = async (req, res, next) => {
     try {
-        const tickets = await ticketModel.find({ userID: req.user._id }).populate('ticketSectionID').populate('orderID').lean();
+        const tickets = await ticketModel.find({ userID: req.user._id }).sort({ _id: -1 }).populate('ticketSectionID').populate('orderID').lean();
         tickets.forEach(ticket => {
             ticket.createdAt = converToPersian(ticket.createdAt);
         })

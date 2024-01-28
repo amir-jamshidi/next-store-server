@@ -129,13 +129,13 @@ export const changeFullname = async (req, res, next) => {
 
 export const getDashboard = async (req, res, next) => {
     try {
-        const ordersUser = await orderModel.find({ userID: req.user._id }).populate({ path: 'productsDetails', populate: { path: 'productID' } }).populate('addressID').populate('sendMethodID').populate('orderStatusID').lean()
-        const orders = ordersUser.slice(-3)
+        const ordersUser = await orderModel.find({ userID: req.user._id }).sort({ _id: -1 }).populate({ path: 'productsDetails', populate: { path: 'productID' } }).populate('addressID').populate('sendMethodID').populate('orderStatusID').lean()
+        const orders = ordersUser.slice(0, 3)
         orders.forEach(order => { order.createdAt = converToPersian(order.createdAt) });
         const awardCount = ordersUser.reduce((sum, cur) => sum + cur.award, 0);
         const orderCount = ordersUser.length;
-        const ticketUser = await ticketModel.find({ userID: req.user._id }).lean();
-        const tickets = ticketUser.slice(-3)
+        const ticketUser = await ticketModel.find({ userID: req.user._id }).sort({ _id: -1 }).lean();
+        const tickets = ticketUser.slice(0, 3)
         tickets.forEach(ticket => { ticket.createdAt = converToPersian(ticket.createdAt) })
         const ticketCount = ticketUser.length;
         res.status(200).json({ tickets, orders, orderCount, awardCount, ticketCount });
