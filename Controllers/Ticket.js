@@ -37,9 +37,11 @@ export const getOne = async (req, res, next) => {
             return res.status(404).json({ message: 'not valid' });
         }
         const ticket = await ticketModel.findOne({ _id: ticketID, userID: req.user._id }).populate('orderID').populate('ticketSectionID').lean();
-        ticket.createdAt = converToPersian(ticket.createdAt);
         if (ticket) {
+            ticket.createdAt = converToPersian(ticket.createdAt);
             res.status(200).json(ticket);
+        } else {
+            return res.status(404).json({ message: 'not found' });
         }
     } catch (error) {
         next(error);
