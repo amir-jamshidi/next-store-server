@@ -153,8 +153,11 @@ export const getVideo = async (req, res, next) => {
 export const getProductsByCategory = async (req, res, next) => {
     try {
         const { href } = req.params;
-        const { _id: categoryID } = await categoryModel.findOne({ href }).lean();
-        const products = await productModel.find({ categoryID }).populate('categoryID').lean();
+        const category = await categoryModel.findOne({ href }).lean();
+        if (!category) {
+            return res.status(404).json({ message: 'not found' })
+        }
+        const products = await productModel.find({ categoryID: category._id }).populate('categoryID').lean();
         if (products) {
             res.status(200).json(products);
         }
@@ -242,7 +245,6 @@ export const getAllOffsProducts = async (req, res, next) => {
 export const getAllProducts = async (req, res, next) => {
     try {
         const { limit, filter = 'new' } = req.query;
-        console.log(limit);
         let sort = filterProduct(filter);
         const products = await productModel.find({}).limit(limit).sort(sort).lean();
         const productsCount = await productModel.find({}).countDocuments().lean();
