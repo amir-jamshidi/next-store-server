@@ -1,4 +1,5 @@
 import cartModel from '../Models/Cart.js'
+import productModel from '../Models/Product.js'
 
 export const getCart = async (req, res, next) => {
     try {
@@ -8,6 +9,14 @@ export const getCart = async (req, res, next) => {
         }
 
         const cart = await cartModel.find({ userID: req.user._id }).populate({ path: 'productID', populate: { path: 'sellerID' } }).lean();
+
+        const noInventory = cart.find(c => c.count > c.productID.inventory)
+
+        if (noInventory) {
+            await cartModel.deleteMany({ userID: req.user._id });
+            return res.status(202).json({ message: "noInventory" })
+        }
+
 
         const cartDetails = {
             totalPrice: 0,
@@ -35,6 +44,18 @@ export const getCart = async (req, res, next) => {
 export const insert = async (req, res, next) => {
     try {
         const { productID, count } = req.body;
+
+        const productCart = await cartModel.findOne({ productID, userID: req.user._id }).lean();
+        if (productCart) {
+            if (productCart.count >= 10) {
+                return res.status(203).json({ message: "limit" })
+            }
+            const { inventory } = await productModel.findOne({ _id: productID }, 'inventory');
+            if (productCart.count >= inventory) {
+                return res.status(202).json({ message: "no inventory" })
+            }
+        }
+
         const isHasBefore = await cartModel.findOne({ productID, userID: req.user._id }).lean();
         if (isHasBefore) {
             const cart = await cartModel.findOneAndUpdate({ productID, userID: req.user._id }, { $inc: { count: +1 } }).lean();
@@ -67,6 +88,19 @@ export const remove = async (req, res, next) => {
 export const editCart = async (req, res, next) => {
     try {
         const { action, productID } = req.body;
+
+        if (action === 'PLUS') {
+            const productCart = await cartModel.findOne({ productID, userID: req.user._id }).lean();
+
+            if (productCart.count >= 10) {
+                return res.status(203).json({ message: "limit" })
+            }
+            const { inventory } = await productModel.findOne({ _id: productID }, 'inventory');
+            if (productCart.count >= inventory) {
+                return res.status(202).json({ message: "no inventory" })
+            }
+        }
+
         const cart = await cartModel.updateOne({ userID: req.user._id, productID }, { $inc: { count: action === 'PLUS' ? +1 : -1 } });
         if (cart) {
             res.status(200).json(cart);

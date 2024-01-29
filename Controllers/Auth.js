@@ -83,6 +83,10 @@ export const validation = async (req, res, next) => {
 }
 export const addAddress = async (req, res, next) => {
     try {
+        const addressCount = await addressModel.find({ userID: req.user._id }).countDocuments();
+        if (addressCount === 10) {
+            return res.status(202).json({ message: 'limit' })
+        }
         const { country, state, city, avenue, alley, description, postalCode, reciver } = req.body
         const address = await addressModel.create({ userID: req.user._id, country, state, city, avenue, alley, description, postalCode, reciver })
         if (address) {
@@ -104,7 +108,7 @@ export const deleteAddress = async (req, res, next) => {
 }
 export const getAddress = async (req, res, next) => {
     try {
-        const addresses = await addressModel.find({ userID: req.user._id }).lean();
+        const addresses = await addressModel.find({ userID: req.user._id }).sort({ _id: -1 }).lean();
         addresses.forEach(address => {
             address.createdAt = converToPersian(address.createdAt);
         })

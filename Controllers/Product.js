@@ -185,7 +185,7 @@ export const addToFavorite = async (req, res, next) => {
 
 export const getFavorites = async (req, res, next) => {
     try {
-        const favorites = await favoriteModel.find({ userID: req.user._id }).populate('productID').lean();
+        const favorites = await favoriteModel.find({ userID: req.user._id }).sort({ _id: -1 }).populate('productID').lean();
         if (favorites) {
             res.status(200).json(favorites);
         }
