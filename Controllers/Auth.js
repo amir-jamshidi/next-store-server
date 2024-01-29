@@ -3,6 +3,7 @@ import addressModel from '../Models/Address.js'
 import userModel from '../Models/User.js'
 import orderModel from '../Models/Order.js'
 import ticketModel from '../Models/Ticket.js'
+import notificationModel from '../Models/Notification.js'
 import { codeGenerator } from '../Utils/codeGenerator.js'
 import jwt from 'jsonwebtoken'
 import converToPersian from './../Utils/PersianDate.js';
@@ -142,7 +143,8 @@ export const getDashboard = async (req, res, next) => {
         const tickets = ticketUser.slice(0, 3)
         tickets.forEach(ticket => { ticket.createdAt = converToPersian(ticket.createdAt) })
         const ticketCount = ticketUser.length;
-        res.status(200).json({ tickets, orders, orderCount, awardCount, ticketCount });
+        const notifications = await notificationModel.find({ userID: req.user._id, seen: 0 });
+        res.status(200).json({ tickets, orders, orderCount, awardCount, ticketCount, notifications });
     } catch (error) {
         next(error)
     }
