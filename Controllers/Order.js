@@ -34,7 +34,6 @@ export const insert = async (req, res, next) => {
         next(error)
     }
 }
-
 export const getOrders = async (req, res, next) => {
     try {
         const orders = await orderModel.find({ userID: req.user._id }).sort({ _id: -1 }).populate({ path: 'productsDetails', populate: { path: 'productID' } }).populate('addressID').populate('sendMethodID').populate('orderStatusID').lean();
@@ -46,7 +45,6 @@ export const getOrders = async (req, res, next) => {
         next(error);
     }
 }
-
 export const getOne = async (req, res, next) => {
     try {
         const { orderID } = req.params;
@@ -64,7 +62,9 @@ export const getOne = async (req, res, next) => {
         next(error);
     }
 }
-
 export const changeState = async (req, res, next) => {
+
+}
+export const getAll = async (reqm, res, next) => {
 
 }
