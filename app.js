@@ -22,6 +22,7 @@ import sendMenthodRouter from './Router/SendMethod.js'
 import searchRouter from './Router/Search.js'
 import ticketRouter from './Router/Ticket.js'
 import notificationRouter from './Router/Notification.js'
+import reminderRouter from './Router/Reminder.js'
 //--
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename)
@@ -63,6 +64,7 @@ app.use('/method', sendMenthodRouter);
 app.use('/search', searchRouter);
 app.use('/ticket', ticketRouter);
 app.use('/notification', notificationRouter);
+app.use('/reminder', reminderRouter);
 //--
 app.use((err, req, res, next) => {
     res.status(400).json({ message: err.message })

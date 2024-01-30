@@ -3,6 +3,7 @@ import cartModel from '../Models/Cart.js'
 import productModel from '../Models/Product.js'
 import orderStatusModel from '../Models/OrderStatus.js'
 import addressModel from '../Models/Address.js'
+import notificationModel from '../Models/Notification.js'
 import converToPersian from './../Utils/PersianDate.js';
 import mongoose from 'mongoose';
 export const insert = async (req, res, next) => {
@@ -23,6 +24,9 @@ export const insert = async (req, res, next) => {
         if (order) {
             await cartModel.deleteMany({ userID: req.user._id });
             res.status(201).json(order);
+            const title = 'سفارش شما با موفقیت ثبت شد ، میتونید از قسمت سفارشات پیگیری کنید'
+            const href = '/panel/orders';
+            await notificationModel.create({ userID: req.user._id, title, href });
             productsDetails.forEach(async p => {
                 await productModel.findOneAndUpdate({ _id: p.productID }, { $inc: { inventory: -p.count } });
             })

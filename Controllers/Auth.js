@@ -1,5 +1,7 @@
 import preUserModel from '../Models/PreUser.js'
 import addressModel from '../Models/Address.js'
+import productModel from '../Models/Product.js'
+import reminderModel from '../Models/Reminder.js'
 import userModel from '../Models/User.js'
 import orderModel from '../Models/Order.js'
 import ticketModel from '../Models/Ticket.js'
@@ -47,8 +49,24 @@ export const login = async (req, res, next) => {
 
 
 }
-export const getMe = (req, res, next) => {
-    res.status(200).json({ userInfo: req.user })
+export const getMe = async (req, res, next) => {
+    try {
+
+        res.status(200).json({ userInfo: req.user });
+        const minders = await reminderModel.find({ userID: req.user._id }).lean();
+        if (minders.length <= 0) return
+        minders.forEach(async minder => {
+            const { inventory, name, href: pHref } = await productModel.findOne({ _id: minder.productID }, 'inventory name href').lean();
+            if (inventory > 0) {
+                const title = `محصول ${name} موجود شد ، خریدتو زودتر انجام بده !`
+                const href = `/product/${pHref}`
+                await notificationModel.create({ userID: req.user._id, title, href });
+                await reminderModel.findOneAndDelete({ userID: req.user._id, productID: minder.productID }).lean();
+            }
+        })
+    } catch (error) {
+        next(error)
+    }
 }
 export const validation = async (req, res, next) => {
     try {
@@ -131,7 +149,6 @@ export const changeFullname = async (req, res, next) => {
         next(error);
     }
 }
-
 export const getDashboard = async (req, res, next) => {
     try {
         const ordersUser = await orderModel.find({ userID: req.user._id }).sort({ _id: -1 }).populate({ path: 'productsDetails', populate: { path: 'productID' } }).populate('addressID').populate('sendMethodID').populate('orderStatusID').lean()
