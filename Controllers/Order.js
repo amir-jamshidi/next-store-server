@@ -7,7 +7,6 @@ import notificationModel from '../Models/Notification.js'
 import converToPersian from './../Utils/PersianDate.js';
 import mongoose from 'mongoose';
 export const insert = async (req, res, next) => {
-
     try {
         const { productsDetails, price, isSuccess, addressID, sendMethodID, award } = req.body
         // productsDetails.forEach(async p => {
@@ -34,8 +33,6 @@ export const insert = async (req, res, next) => {
     } catch (error) {
         next(error)
     }
-
-
 }
 
 export const getOrders = async (req, res, next) => {
