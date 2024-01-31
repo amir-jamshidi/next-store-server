@@ -69,3 +69,6 @@ export const changeState = async (req, res, next) => {
 export const removeOrder = async (req, res, next) => {
 
 }
+export const removeAllOrders = async (req, res, next) => {
+
+}
