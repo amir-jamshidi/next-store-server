@@ -72,3 +72,6 @@ export const removeOrder = async (req, res, next) => {
 export const removeAllOrders = async (req, res, next) => {
 
 }
+export const getAllOrders = async (req, res, next) => {
+
+}
