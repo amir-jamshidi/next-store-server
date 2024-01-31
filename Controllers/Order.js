@@ -65,3 +65,7 @@ export const getOne = async (req, res, next) => {
 export const changeState = async (req, res, next) => {
 
 }
+
+export const removeOrder = async (req, res, next) => {
+
+}
