@@ -1,8 +1,8 @@
 import brandModel from '../Models/Brand.js';
 export const insert = async (req, res, next) => {
     try {
-        const { name , nameEn} = req.body
-        const brand = await brandModel.create({ name , nameEn});
+        const { name, nameEn } = req.body
+        const brand = await brandModel.create({ name, nameEn });
         if (brand) {
             res.status(201).json(brand);
         }
@@ -22,3 +22,6 @@ export const get = async (req, res, next) => {
     }
 }
 
+export const getAll = async (req, res, next) => {
+
+}
