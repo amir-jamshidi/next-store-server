@@ -41,7 +41,7 @@ export const remove = async (req, res, next) => {
 }
 
 export const getLasted = async (req, res, next) => {
-
+    console.log(req.cookies);
     try {
         const lastedProducts = await productModel.find({ isOff: 0 }).sort({ _id: -1 }).limit(10).lean();
         if (lastedProducts) {
