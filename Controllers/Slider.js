@@ -42,3 +42,6 @@ export const removeAll = async (req, res, next) => {
 export const editSlider = async (req, res, next) => {
 
 }
+export const setTimmer = async (req, res, next) => {
+
+}
