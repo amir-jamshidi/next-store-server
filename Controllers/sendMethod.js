@@ -21,6 +21,9 @@ export const get = async (req, res, next) => {
     }
 }
 
-export const changeMethod = () => {
+export const changeMethod = async (req, res, next) => {
+
+}
+export const remove = async (req, res, next) => {
 
 }
