@@ -20,3 +20,7 @@ export const get = async (req, res, next) => {
         next(error);
     }
 }
+
+export const changeMethod = () => {
+
+}
