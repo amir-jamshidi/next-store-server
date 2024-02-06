@@ -47,3 +47,6 @@ export const removeAll = async (req, res, next) => {
 export const changeAll = async (req, res, next) => {
 
 }
+export const removeReminderUser = async (req, res, next) => {
+
+}
