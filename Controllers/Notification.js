@@ -47,3 +47,6 @@ export const getAll = async (req, res, next) => {
 export const removeAll = async (req, res, next) => {
 
 }
+export const getAllUser = async (req, res, next) => {
+
+}
