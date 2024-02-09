@@ -22,3 +22,6 @@ export const removeAll = async (req, res, next) => {
 export const get = async (req, res, next) => {
 
 }
+export const getAll = async (req, res, next) => {
+
+}
