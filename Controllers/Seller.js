@@ -11,3 +11,8 @@ export const insert = async (req, res, next) => {
         next(error)
     }
 }
+
+
+export const remove = async (req, res, next) => {
+
+}
