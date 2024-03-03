@@ -4,3 +4,4 @@ export const isAdmin = async (req, res, next) => {
     }
     res.status(422).json({ message: "This Route Access For Admins Only" });
 }
+
