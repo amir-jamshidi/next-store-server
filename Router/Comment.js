@@ -10,3 +10,4 @@ router.route('/').post(isLogin, multer({ storage: commentStorage }).array('photo
 router.route('/:productID').get(get);
 //--
 export default router
+
