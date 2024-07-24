@@ -20,3 +20,4 @@ export const isOptionalLogin = async (req, res, next) => {
         res.status(422).json({ message: error.message });
     }
 }
+
